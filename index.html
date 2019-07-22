@@ -1,35 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <link
       href="https://fonts.googleapis.com/css?family=Lato:100,300,600"
       rel="stylesheet"
       type="text/css"
     />
     <link
-      href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
-      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
     />
     <link type="text/css" rel="stylesheet" href="style.css" />
 
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/facebook/92/pig-nose_1f43d.png"
+    />
     <title>Pig Game</title>
   </head>
 
   <body>
-    <div class="wrapper clearfix">
-      <div class="player-0-panel active">
-        <div class="player-name" id="name-0">Player 1</div>
-        <div class="player-score" id="score-0">0</div>
-        <div class="player-current-box">
-          <div class="player-current-label">Current</div>
-          <div class="player-current-score" id="current-0">0</div>
-        </div>
-      </div>
+    <span
+      class="d-flex text-center justify-content-center align-items-center mt-3 display-message "
+    ></span>
 
-      <div class="player-1-panel">
-        <div class="player-name" id="name-1">Player 2</div>
+    <div class="wrapper clearfix">
+      <div class="player-1-panel active">
+        <div class="player-name" id="name-1">Player 1</div>
         <div class="player-score" id="score-1">0</div>
         <div class="player-current-box">
           <div class="player-current-label">Current</div>
@@ -37,17 +50,43 @@
         </div>
       </div>
 
-      <button class="btn-new">
-        <i class="ion-ios-plus-outline"></i>New game
+      <div class="player-2-panel">
+        <div class="player-name" id="name-2">Player 2</div>
+        <div class="player-score" id="score-2">0</div>
+        <div class="player-current-box">
+          <div class="player-current-label">Current</div>
+          <div class="player-current-score" id="current-2">0</div>
+        </div>
+      </div>
+
+      <button class="btn-new fadeOutUp" onclick="newGame()">
+        <i class="material-icons"> add_circle_outline </i>New game
       </button>
-      <button class="btn-roll"><i class="ion-ios-loop"></i>Roll dice</button>
-      <button class="btn-hold">
-        <i class="ion-ios-download-outline"></i>Hold
+      <button class="btn-roll" onclick="roll()">
+        <i class="material-icons"> cached </i>Roll dice
+      </button>
+      <button class="btn-hold" onclick="hold()">
+        <i class="material-icons"> get_app </i>Hold
       </button>
 
-      <img src="images/dice/5.png" alt="Dice" class="dice" />
+      <img src="images/dice/0.png" alt="Dice" class="dice" />
     </div>
 
-    <script src="app.js"></script>
+    <script src="scripts/script.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
