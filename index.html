@@ -36,8 +36,14 @@
   </head>
 
   <body>
+    <script
+      src="http://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+
     <span
-      class="d-flex text-center justify-content-center align-items-center mt-3 display-message "
+      class="d-flex text-center justify-content-center align-items-center mt-3 display-message"
     ></span>
 
     <div class="wrapper clearfix">
@@ -68,16 +74,13 @@
       <button class="btn-hold" onclick="hold()">
         <i class="material-icons"> get_app </i>Hold
       </button>
+      <p id="displayScoreWin">Score to win: <span id="scoreWin"></span></p>
 
       <img src="images/dice/0.png" alt="Dice" class="dice" />
     </div>
 
     <script src="scripts/script.js"></script>
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"
-    ></script>
+
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
       integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"

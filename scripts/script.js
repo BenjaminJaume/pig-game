@@ -9,35 +9,62 @@ GAME RULES:
 
 */
 
-var scores, roundScore, activePlayer, dice, messages;
+/* Variables */
+
+var scores, roundScore, activePlayer, dice, messages, scoreWin;
 
 scores = [0, 0];
 roundScore = 0;
 activePlayer = false; // false for player 1 and true for player 2
+scoreWin = 50;
 messages = [
   'New game started',
   'You lose. Player 1, your turn',
   'You lose. Player 2, your turn',
   'Score holded. Player 1, your turn',
-  'Score holded. Player 2, your turn'
+  'Score holded. Player 2, your turn',
+  'Player 1 win!',
+  'Player 2 win!'
 ];
 
-function animateButton(element) {
-  var animation = 'flipInX';
-  var speed = 'fast';
+/* HTML elements */
+
+var buttonRoll = document.querySelector('.btn-roll');
+var buttonHold = document.querySelector('.btn-hold');
+
+const imgDice = document.querySelector('.dice');
+const displayScoreWin = document.querySelector('#scoreWin');
+const score1 = document.querySelector('#score-1');
+const score2 = document.querySelector('#score-2');
+const current1 = document.querySelector('#current-1');
+const current2 = document.querySelector('#current-2');
+const p1Panel = document.querySelector('.player-1-panel');
+const p2Panel = document.querySelector('.player-2-panel');
+
+$(document).ready(function() {
+  displayScoreWin.textContent = scoreWin;
+});
+
+function animate(element) {
+  var animation = 'fadeIn';
+  var speed = 'faster';
+
   element.classList.add('animated', animation, speed);
   element.addEventListener('animationend', function() {
     element.classList.remove('animated', animation, speed);
   });
 }
 
-function displayScores(scores, roundScore, activePlayer) {
-  document.querySelector('#score-1').textContent = scores[0];
-  document.querySelector('#score-2').textContent = scores[1];
-
-  !activePlayer
-    ? (document.querySelector('#current-1').textContent = roundScore)
-    : (document.querySelector('#current-2').textContent = roundScore);
+function displayScores() {
+  if (!activePlayer) {
+    score1.textContent = scores[0];
+    current1.textContent = roundScore;
+    animate(current1);
+  } else {
+    score2.textContent = scores[1];
+    current2.textContent = roundScore;
+    animate(current2);
+  }
 }
 
 function displayToast(number) {
@@ -56,8 +83,6 @@ function displayToast(number) {
 }
 
 function changePlayer(activePlayer) {
-  const p1Panel = document.querySelector('.player-1-panel');
-  const p2Panel = document.querySelector('.player-2-panel');
   if (!activePlayer) {
     p1Panel.classList.remove('active');
     p2Panel.classList.add('active');
@@ -68,37 +93,88 @@ function changePlayer(activePlayer) {
   return !activePlayer;
 }
 
+function playerWin(activePLayer) {
+  buttonHold.innerHTML = '';
+  buttonRoll.setAttribute('disabled', 'disabled');
+  buttonHold.setAttribute('disabled', 'disabled');
+
+  displayScores();
+
+  if (!activePLayer) {
+    buttonRoll.innerHTML = 'Player 1 win!';
+    displayToast(5);
+  } else {
+    buttonRoll.innerHTML = 'Player 2 win!';
+    displayToast(6);
+  }
+}
+
 function newGame() {
-  animateButton(event.target);
+  buttonRoll.innerHTML = `<i class="material-icons"> cached </i>Roll dice`;
+  buttonHold.innerHTML = `<i class="material-icons"> get_app </i>Hold`;
+  buttonRoll.removeAttribute('disabled');
+  buttonHold.removeAttribute('disabled');
+
+  scores = [0, 0];
+  roundScore = 0;
+  activePlayer = false;
+  p1Panel.classList.add('active');
+  p2Panel.classList.remove('active');
+  imgDice.src = `images/dice/0.png`;
+
+  score1.textContent = '0';
+  score2.textContent = '0';
+  current1.textContent = '0';
+  current2.textContent = '0';
+
+  animate(buttonRoll);
+  animate(buttonHold);
+  animate(score1);
+  animate(score2);
+  animate(current1);
+  animate(current2);
   displayToast(0);
 }
 
 function roll() {
-  animateButton(event.target);
   dice = Math.floor(Math.random() * 6) + 1;
-  document.querySelector('.dice').src = `images/dice/${dice}.png`;
+  imgDice.src = `images/dice/${dice}.png`;
 
   if (dice === 1) {
     roundScore = 0;
-    displayScores(scores, roundScore, activePlayer);
+    displayScores();
     !activePlayer ? displayToast(2) : displayToast(1);
     activePlayer = changePlayer(activePlayer);
   } else {
     roundScore += dice;
-    displayScores(scores, roundScore, activePlayer);
+    displayScores();
   }
 }
 
 function hold() {
-  animateButton(event.target);
+  animate(event.target);
+
   if (!activePlayer) {
     scores[0] += roundScore;
-    displayToast(4);
+    if (scores[0] >= scoreWin) {
+      playerWin(activePlayer);
+    } else {
+      roundScore = 0;
+      displayScores();
+      activePlayer = changePlayer(activePlayer);
+      displayToast(4);
+    }
   } else {
     scores[1] += roundScore;
-    displayToast(3);
+    if (scores[1] >= scoreWin) {
+      playerWin(activePlayer);
+    } else {
+      roundScore = 0;
+      displayScores();
+      activePlayer = changePlayer(activePlayer);
+      displayToast(3);
+    }
   }
-  roundScore = 0;
-  displayScores(scores, roundScore, activePlayer);
-  activePlayer = changePlayer(activePlayer);
+
+  displayScores();
 }
